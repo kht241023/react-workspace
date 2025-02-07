@@ -30,6 +30,12 @@ const UseStateOne = () => {
     // 초기값으로 0을 줘도 되고, 빈 값을 주고 싶다면 "" 작성
     const [text, setText] = useState("");
 
+    // form 이나 input textarea 와 같이 키보드로 값을 입력하는 경우
+    // function () {} 이나 const = () => {}   에서 () = 소괄호 = 파라미터 나 매개변수 명칭이
+    // 들어가는 자리에 e 나 event 로 매개변수나 파라미터 명칭을 작성하고
+    // (키보드로 값을 입력하는 것 = event = 특정 행위가 발생했다)
+    // 이벤트가 감지됐을 때 값이 무엇인지 설정
+    //    e  .  target   .   value
     const inputChange = (e) => {
         setText(e.target.value)
     }

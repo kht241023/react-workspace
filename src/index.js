@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ChapUseState from "./Chapter/ChapUseState";
 import PracticeUseState from "./practice/PracticeUseState";
+import ChapProps from "./Chapter/ChapProps";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,8 +17,12 @@ root.render(
         파일명.js 를 import 해서 사용할 수 있음
         */}
         <App/>
+        {/*
         <ChapUseState/>
         <PracticeUseState />
+        */}
+
+        <ChapProps />
     </React.StrictMode>
 );
 
