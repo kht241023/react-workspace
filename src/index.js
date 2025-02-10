@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ChapUseState from "./Chapter/ChapUseState";
-import PracticeUseState from "./practice/PracticeUseState";
-import ChapProps from "./Chapter/ChapProps";
+import ChapPropsDefault from "./Chapter/ChapProps/ChapPropsDefault";
+import PracticePropsDefault from "./practice/PracticePropsDefault";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,9 +19,16 @@ root.render(
         {/*
         <ChapUseState/>
         <PracticeUseState />
-        */}
-
         <ChapProps />
+        <PracticeProps />
+        <ChapPropsFunction />
+         <PracticePropsFunction />
+         <ChapPropsDefault/>
+        */}
+        <PracticePropsDefault />
+
+
+
     </React.StrictMode>
 );
 
