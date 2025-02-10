@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ChapPropsDefault from "./Chapter/ChapProps/ChapPropsDefault";
 import PracticePropsDefault from "./practice/PracticePropsDefault";
+import ChapPropsArray from "./Chapter/ChapProps/ChapPropsArray";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,8 +25,10 @@ root.render(
         <ChapPropsFunction />
          <PracticePropsFunction />
          <ChapPropsDefault/>
+         <PracticePropsDefault />
         */}
-        <PracticePropsDefault />
+        <ChapPropsArray />
+
 
 
 
