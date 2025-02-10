@@ -40,6 +40,7 @@ const ChildTwo = (props) => {
 }
 
 // 메인으로 확인할 배열리스트   () 내부에 들어올 변수명이 단일이기 때문에 users 에서 {} 를 사용여부는 상관 X
+// users 목록 형태 Ok  RestController 로 가져오는 형식
 const ChildThree = ({users}) => {
     return (
         <div>
