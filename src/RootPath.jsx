@@ -9,6 +9,8 @@ import PizzaList from "./BackendAPI/PizzaList";
 import PizzaDetail from "./BackendAPI/PizzaDetail";
 import ChapUseEffect from "./Chapter/ChapUseEffect";
 import PizzaForm from "./BackendAPI/PizzaForm";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 // React 에서 작성하는 경로는 view Controller 와 관계 없음
 // springboot resource 밑에 작성한 css / js / html 파일은 더이상 의미가 없음
 // 위 역할을 react 에서 모두 할 것이기 때문
@@ -27,7 +29,7 @@ function RootPath() {
              현재는 2번 방식을 사용한 상태이며,
              RootPath 와 같이 사용할 수 있음
                */}
-
+        <Header/>
             <Routes>
                 {/*
                 React 에서 경로로 표기하는 Component 와
@@ -56,6 +58,7 @@ function RootPath() {
                 <Route path="/pizzas/detail/:id" element={<PizzaDetail />} />
                 <Route path="/pizza/add" element={<PizzaForm /> } />
             </Routes>
+            <Footer/>
         </Router>
     )
 }

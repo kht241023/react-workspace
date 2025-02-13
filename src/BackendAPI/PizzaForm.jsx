@@ -20,11 +20,15 @@ const PizzaFormChapTwo = () => {
 
 
     const handleChangeValue = (e) => {
-        const {name, value} = e.target;
+        // name = input 내에서 사용하는 속성 명칭
+        // value = input 내에서 사용하는 속성 명칭
+        const {name, value} = e.target;   // value 로 작성된 속성에 특정 행위가 발생한다는 표기 작성
 
-        if(name ==="pizzaName")        setPizzaName(value);
-        else if(name ==="price")       setPrice(value);
-        else if(name ==="description") setDescription(value);
+        // 위에서 작성한 값 변환이 일어났을 경우
+    //  만약에 input 속성 name 에 pizzaName 이 존재한다면  값 변경
+        if(name ==="pizzaName")                                setPizzaName(value);
+        else if(name ==="price")                               setPrice(value);
+        else if(name ==="description")                         setDescription(value);
     }
 
     const handleAddPizza = () => {
@@ -109,17 +113,20 @@ const PizzaFormChapTwo = () => {
             */}
             <label>피자이름</label>
             <input type="text"
+                   name="pizzaName"
                    placeholder="피자이름"
                    value={pizzaName}
                    onChange={handleChangeValue}/>
             <label>피자가격</label>
             <input type="number"
+                   name="price"
                    placeholder="피자가격"
                    value={price}
                    onChange={handleChangeValue}
             />
             <label>피자설명</label>
             <textarea placeholder="피자설명"
+                      name="description"
                       value={description}
                       onChange={handleChangeValue}
             ></textarea>
