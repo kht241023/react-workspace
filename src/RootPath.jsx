@@ -13,6 +13,7 @@ import PizzaForm from "./BackendAPI/PizzaForm";
 // springboot resource 밑에 작성한 css / js / html 파일은 더이상 의미가 없음
 // 위 역할을 react 에서 모두 할 것이기 때문
 function RootPath() {
+    // 추후 axios 나 로그인 세션 상태관리 작성
     return(
         <Router>
             {/*
@@ -27,7 +28,6 @@ function RootPath() {
              RootPath 와 같이 사용할 수 있음
                */}
 
-            <ChapUseEffect />
             <Routes>
                 {/*
                 React 에서 경로로 표기하는 Component 와
@@ -39,7 +39,19 @@ function RootPath() {
                 Routes 외부에 작성하는 대표적인 예제 Component
                 -> Header Footer
                 */}
-              {/*경로설정  path = api url 경로 작성   element = {<경로에 따라 보여줄 js 파일명칭>}  */}
+              {/*
+              경로설정  path = api url 경로 작성   element = {<경로에 따라 보여줄 js 파일명칭>}
+              추후에 <Link> 태그 내부에
+              <Link to = ""> 로 작성하여
+              <Route path = ""> 로 지정한 경로를 to 내부에 작성해준다.
+
+              path = to 경로 동일
+
+              주의해야 할 점
+              상세보기와 같이 주소값이 유동적으로 변경되어야한다면
+              path 에서는 :변경될값
+              to   에서는 ${변경될값} 작성
+              */}
                 <Route    path="/" element={<PizzaList />} />
                 <Route path="/pizzas/detail/:id" element={<PizzaDetail />} />
                 <Route path="/pizza/add" element={<PizzaForm /> } />
