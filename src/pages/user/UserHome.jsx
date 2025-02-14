@@ -11,7 +11,7 @@ const UserHome = ({user}) => {
 
     const handleLogout = () => {
         axios
-            .post("로그아웃 url 주소 작성")
+            .post("http://localhost:8080/api/user/logout")
             .then( // 로그아웃 주소로 연결하고 controller에서 로그아웃에 대한 정보 전달받았다면
                 () => {
                     localStorage.removeItem("user");
@@ -29,7 +29,7 @@ const UserHome = ({user}) => {
 
     }
     const handleLoginPage = () => {
-
+            navigate("/login");
     }
     return (
         <div>

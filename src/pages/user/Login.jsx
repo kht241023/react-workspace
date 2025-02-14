@@ -13,7 +13,7 @@ const Login = ({setUser}) => {
 
         axios
             .post(
-                "로그인 API URL 주소",
+                "http://localhost:8080/api/user/login",
                 {userId, password}
             )
             .then(
