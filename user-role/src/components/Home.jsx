@@ -9,81 +9,8 @@ import StoreComponent from "../pages/main/StoreComponent";
 import SearchComponent from "../pages/main/SearchComponent";
 import AllProductsComponent from "../pages/main/AllProductsComponent";
 
+
 const Home = () => {
-    const [searchResults, setSearchResults] = useState([]);
-    const [allProducts, setAllProducts] = useState([]);
-    const [storeInfo, setStoreInfo] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-
-    // 전체상품 가져오는 API
-    const apiAllProducts = () => {
-        setLoading(true);
-        axios.get("/api/products")
-            .then((response) => {
-                setAllProducts(response.data);
-            })
-            .catch((err) => {
-                setError(err.message);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    // 가게정보 API
-    const apiStoreInfo = () => {
-        setLoading(true);
-        axios.get("/api/store")
-            .then((response) => {
-                setStoreInfo(response.data);
-            })
-            .catch((err) => {
-                setError(err.message);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-
-    // main 을 시작했을 때 불러오기
-    useEffect(() => {
-        apiAllProducts();
-        apiStoreInfo();
-    }, []);
-
-    // 검색 기능
-    const handleSearch = (query) => {
-        const results = allProducts.filter((product) =>
-            product.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setSearchResults(results);
-    };
-
-    return (
-        <div>
-            <h1>홈 페이지</h1>
-
-            {/* 검색 컴포넌트*/}
-            <SearchComponent onSearch={handleSearch} />
-
-            {/* 검색한 내용이 있을 경우, 검색에 대한 결과를 main에서 보여주기 */}
-            {searchResults.length > 0 ? (
-                <AllProductsComponent products={searchResults} />
-            ) : (
-                <AllProductsComponent products={allProducts} />
-            )}
-            {/* 가게 컴포넌트*/}
-            <StoreComponent store={storeInfo} />
-        </div>
-    );
-};
-
-
-
-
-const HomeOne = () => {
     const navigate = useNavigate();
     // window.location.href 처럼 자바스크립트에서 이동 경로 설정
     const [user, setUser] = useState(null);
