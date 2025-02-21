@@ -59,6 +59,12 @@ const ProductSearch = () => {
         }
     }
 
+    const handleSug = (sugs) => {
+        setKeyword(sugs);
+        setShow(false);
+    }
+
+
     const searchProducts = () => {
         // input 비어있는지 확인 후 비어있다면
         // "검색어를 입력하세요." 보여준 후 리턴
@@ -87,27 +93,29 @@ const ProductSearch = () => {
         <div className="productsearch-container">
             <h2>상품 검색</h2>
             {/*  input onChange 없음   */}
-            <input
-                type="text"
-                value={keyword}
-                onFocus={ () => setShow(true)}
-                onChange={(e) => setKeyword(e.target.value)}
-            />
-            {
-                show && sugs.length > 0 && (
-                    <ul>
-                        {sugs.map(
-                            (sugs,index) => (
-                                <li key={index}>
-                                    {sugs}
-                                </li>
-                            )
+            <div>
+                <input
+                    type="text"
+                    value={keyword}
+                    onFocus={() => setShow(true)}
+                    onChange={handleChange}
+                    onBlur={() => setTimeout(() => setShow(false), 200)}
+                />
+                {
+                    show && sugs.length > 0 && (
+                        <ul>
+                            {sugs.map(
+                                (sugs, index) => (
+                                    <li key={index} onMouseDown={ () => handleSug(sugs)}>
+                                        {sugs}
+                                    </li>
+                                )
+                            )}
 
-                        )}
-
-                    </ul>
-                )
-            }
+                        </ul>
+                    )
+                }
+            </div>
             <button onClick={searchProducts}>검색</button>
 
             <ul>
