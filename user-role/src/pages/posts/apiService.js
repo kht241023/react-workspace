@@ -25,7 +25,7 @@ const apiService = {
                     (err) => {
                         alert("게시물을 불러오는 중 오류가 발생했습니다.");
                         setErr("게시판 목록 보기 실패");
-                        console.log("err 문제 개발자가 확인하기 : " ,err);
+                        console.log("err 문제 개발자가 확인하기 : ", err);
                     }
                 )
         },
@@ -42,19 +42,42 @@ const apiService = {
                 .catch(
                     err => {
                         alert("백엔드에서 데이터를 가져올 수 없습니다.");
-                        console.log("개발자만 무슨 문제인지 확인할 수 있도록 설정 : ",setErr(err));
+                        console.log("개발자만 무슨 문제인지 확인할 수 있도록 설정 : ", setErr(err));
                     }
                 )
 
         },
 
-    searchPosts: function (keyword, callback, errorCallback) {
-        // encodeURIComponent -> 영어, 숫자 이외 값이 왔을 때 문제가 생길 경우 UTF-8 로 한글 깨짐 없도록 설정
-        // 예전 코드에선 필수 였으나, 근래 필수
-        axios.get(`${API_POST_URL}/search?keyword=${encodeURIComponent(keyword)}`)
-            .then(response => callback(response.data))
-            .catch(error => errorCallback(error));
-    },
+    searchPosts:
+        function (keyword, callback, errorCallback) {
+            // encodeURIComponent -> 영어, 숫자 이외 값이 왔을 때 문제가 생길 경우 UTF-8 로 한글 깨짐 없도록 설정
+            // 예전 코드에선 필수 였으나, 근래 필수
+            axios.get(`${API_POST_URL}/search?keyword=${encodeURIComponent(keyword)}`)
+                .then(response => callback(response.data))
+                .catch(error => errorCallback(error));
+        },
+
+    suggestedPosts:
+        function (keyword, callback, errorCallback) {
+            axios
+                .get(`http://localhost:8080/api/posts/search?keyword=${value}`)
+                .then(
+                    (res) => {
+                        const 제안리스트 = res.data?.map(post => post.postTitle) || [];
+                        setSugs(제안리스트);
+                        setShow(true);
+                    }
+                )
+                .catch(
+                    // 백엔드에서 검색어를 입력했을 때 추천하는 검색 리스트 가져오기에 문제가 발생했을 때는
+                    // 클라이언트한테 문제가 발생했음을 알려줄 필요 X
+                    // 추천 검색어 리스트를 비우고 보여주지 않음 설정
+                    (err) => {
+                        setSugs([]);
+                        setShow(false);
+                    }
+                )
+        },
 
 
     // 자바스크립트는 , 뒤에 다른 값이 존재하지 않아도
@@ -64,7 +87,7 @@ const apiService = {
 
 }
 
-export  default apiService;
+export default apiService;
 
 
 
