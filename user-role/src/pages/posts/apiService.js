@@ -1,11 +1,17 @@
 // axios. 작성했던 기능을 모아서 설정한다음 각 jsx 파일로 전달
-
-
 // 프링부트 실행 포트 restcontroller 에서 requestMapping 에 작성한 api 를 그대로 작성
+// 데이터를 백엔드에서 가지고 왔을 때 왜 res.data 로 작성하는가?!
+// res.data 에서 res 라는 명칭은 response 라고 작성해도 되고,
+// abc, xyz, abc123 ... 원하는 변수이름으로 작성 OK
+// 왜냐하면 백엔드에서 작성되어있는 데이터를 담아서 가져오는 변수 이름일 뿐
+// 백엔드 주소에서 담아온 데이터를 변수이름에서 가져와 사용할 때는
+// 변수이름.data 라는 명칭을 붙여줘야 함
+// 자바스크립트 에서 변수이름에 들어있는 데이터를 확인할 때 .data
+// 라는 명칭을 사용하기 때문
+
 import axios from "axios";
 
 const API_POST_URL = "http://localhost:8080/api/posts";
-
 
 const apiService = {
     // 외부에서 사용할 메서드 명칭 :
@@ -16,12 +22,17 @@ const apiService = {
         function (setPosts, setErr) {
             axios
                 .get(API_POST_URL)
-                .then(
+                .then( //백엔드 연결 성공
                     (res) => {
-                        setPosts(res.data)
+                        
+                        if (res.data > 0) { //  데이터가 1개이상 존재하기 때문에 데이터 보여주기
+                            setPosts(res.data)
+                        } else {            // 데이터를 가져올 수 있는 데이터가 없기 때문에 데이터 없음 표시
+                            alert("백엔드에서 가져올 수 있는 데이터가 없습니다.");
+                        }
                     }
                 )
-                .catch(
+                .catch( //백엔드 연결 실패
                     (err) => {
                         alert("게시물을 불러오는 중 오류가 발생했습니다.");
                         setErr("게시판 목록 보기 실패");
@@ -46,7 +57,6 @@ const apiService = {
                         console.log("개발자만 무슨 문제인지 확인할 수 있도록 설정 : ", setErr(err));
                     }
                 )
-
         },
 
     searchPosts:
@@ -80,7 +90,33 @@ const apiService = {
                 )
         },
 
+    updatePost: function (postId, postData, callback, errorCallback) {
+        axios.put(`${API_POST_URL}/${postId}`, postData, {
+            headers: { "Content-Type": "application/json" }
+        })
+            .then( // 백엔드와 연결에 성공했습니다.
+                (res) => {
 
+                    if(res.data && res.data.updatedAt) {
+                        alert(callback); //게시물이 수정되었다. 표기
+                    } else {
+                        alert("변경된 내용이 없습니다.")
+                    }
+
+
+                }
+
+
+
+            )
+            .catch( // 백엔드와 연결을 실패했습니다.
+                (err) => {
+                    alert(errorCallback);
+                }
+
+
+            );
+    },
     // 자바스크립트는 , 뒤에 다른 값이 존재하지 않아도
     // 문제가 발생하지 않으므로
     // 기능이나 목록을 작성할 때

@@ -1,20 +1,56 @@
 import {useParams} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import apiService from "./apiService";
 
 const UpdatePost = () => {
     // useParams = URLSearchParams 와 같은 기능
-    const { postId } = useParams(); // URL 에서 postId 가져오기
+    const {postId} = useParams(); // URL 에서 postId 가져오기
     const [post, setPost] = useState(null);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("일반");
-    
+    const [message, setMessage] = useState(null);
+
+    // PostDetail 에서 작성한 것처럼
+    // 수정할 내용에 들어갈 기존 값 불러오기
+    useEffect(() => {
+        apiService.getPostById(postId,
+            (data) => {
+                setPost(data);
+                setTitle(data.postTitle);
+                setContent(data.postContent);
+                setCategory(data.postCategory);
+            },
+
+
+            setMessage)
+    }, [postId]);
+
+
     // 수정 버튼을 눌렀을 때 실행할 기능 생성
     const handleUpdate = () => {
-        
+        const updateContent = {
+            // userId 는 추후 login 한 세션에서 가져와 넣을 것
+            // 현재 postStatus 는 설정해놓은 변수이름이 없기 때문에 "XX" 라는 값으로 임의 설정
+            // controller DTO 명칭    :  react 에서 value 값에 들어가있는 명칭
+            postId: postId,
+            userId: post.userId, // 기존 작성자 유지
+            postTitle: title,
+            postContent: content,
+            postCategory: category,
+            postStatus: "XX",
+            updateAt: new Date().toISOString(),
+
+        };
+
+
+        apiService.updatePost(
+            postId, updateContent, "수정성공", "백엔드 에러"
+        )
     }
     return (
-        <div className="UpdatePost-container">
+        <div className="container">
+
             <h2>게시물 수정</h2>
             <input
                 type="text"
