@@ -24,8 +24,9 @@ const apiService = {
                 .get(API_POST_URL)
                 .then( //백엔드 연결 성공
                     (res) => {
-                        
-                        if (res.data > 0) { //  데이터가 1개이상 존재하기 때문에 데이터 보여주기
+                        console.log("res.data", res.data);
+                        if (res.data.length > 0) { //  데이터가 1개이상 존재하기 때문에 데이터 보여주기
+                            console.log("res.data", res.data);
                             setPosts(res.data)
                         } else {            // 데이터를 가져올 수 있는 데이터가 없기 때문에 데이터 없음 표시
                             alert("백엔드에서 가져올 수 있는 데이터가 없습니다.");
@@ -92,29 +93,25 @@ const apiService = {
 
     updatePost: function (postId, postData, callback, errorCallback) {
         axios.put(`${API_POST_URL}/${postId}`, postData, {
-            headers: { "Content-Type": "application/json" }
+            headers: {"Content-Type": "application/json"}
         })
             .then( // 백엔드와 연결에 성공했습니다.
                 (res) => {
 
-                    if(res.data && res.data.updatedAt) {
-                        alert(callback); //게시물이 수정되었다. 표기
-                    } else {
+                    if (res.data && res.data.updatedAt) {
                         alert("변경된 내용이 없습니다.")
+                    } else {
+
+                        alert(callback); //게시물이 수정되었다. 표기
                     }
 
 
                 }
-
-
-
             )
             .catch( // 백엔드와 연결을 실패했습니다.
                 (err) => {
                     alert(errorCallback);
                 }
-
-
             );
     },
     // 자바스크립트는 , 뒤에 다른 값이 존재하지 않아도
@@ -135,7 +132,7 @@ const apiService = {
                 .delete(`${API_POST_URL}/${postId}`)
                 .then(
                     (response) => {
-                      //  callback(response.data)
+                        //  callback(response.data)
                         alert(callback);
                     }
                 )
