@@ -37,7 +37,8 @@ const apiService = {
                 //.get(API_POST_URL + "/"+ postId) //http://localhost:8080/api/posts1
                 .get(`${API_POST_URL}/${postId}`) //http://localhost:8080/api/posts1
                 .then(
-                    res => setPost(res.data)
+                    res =>
+                        setPost(res.data)
                 )
                 .catch(
                     err => {
@@ -60,12 +61,12 @@ const apiService = {
     suggestedPosts:
         function (keyword, callback, errorCallback) {
             axios
-                .get(`http://localhost:8080/api/posts/search?keyword=${value}`)
+                .get(`http://localhost:8080/api/posts/search?keyword=${keyword}`)
                 .then(
                     (res) => {
                         const 제안리스트 = res.data?.map(post => post.postTitle) || [];
-                        setSugs(제안리스트);
-                        setShow(true);
+                        callback(제안리스트);
+                        errorCallback(true);
                     }
                 )
                 .catch(
@@ -73,8 +74,8 @@ const apiService = {
                     // 클라이언트한테 문제가 발생했음을 알려줄 필요 X
                     // 추천 검색어 리스트를 비우고 보여주지 않음 설정
                     (err) => {
-                        setSugs([]);
-                        setShow(false);
+                        callback([]);
+                        errorCallback(false);
                     }
                 )
         },
@@ -84,6 +85,37 @@ const apiService = {
     // 문제가 발생하지 않으므로
     // 기능이나 목록을 작성할 때
     // , 를 작성해주는 것이 가장 좋음!
+
+    deletePost:
+    //                                                                                      PostDetail 에서 전달받은 매개변수 자리
+    //          매 개 변 수 는 전달 받은 값을 기능 내에서 사용할 수 있도록 설정한 이름일 뿐이기 때문에
+    //          postId 가 아니라 abc, apple, xyz 와 같은 이름으로 작성 후 {} 내부에서 작성한 변수이름을 활용
+    // function (PostDetail 에서 apiService 를 호출하여 deletePost 기능을 실행했을 때 가져온 postId,
+    //           PostDetail 에서 apiService 를 호출하여 deletePost 기능을 실행했을 때 가져온 callback,
+    //           PostDetail 에서 apiService 를 호출하여 deletePost 기능을 실행했을 때 가져온 errorCallback) {
+    // function (postId, callback, errorCallback) {
+        function (postId, callback, errorCallback) {
+            axios
+                .delete(`${API_POST_URL}/${postId}`)
+                .then(
+                    (response) => {
+                      //  callback(response.data)
+                        alert(callback);
+                    }
+                )
+                .catch(
+                    // 백엔드에서 삭제가 불가능할 때
+                    // 알람으로
+                    // 백엔드에서 컨트롤러 연결에 실패하였습니다.
+
+                    error => {
+                        alert(errorCallback);
+                        //alert("백엔드에서 컨트롤러 연결에 실패하였습니다.");
+
+                        console.error("프론트엔드에서 확인할 에러 메세지 : ", error);
+                    }
+                )
+        }
 
 }
 
