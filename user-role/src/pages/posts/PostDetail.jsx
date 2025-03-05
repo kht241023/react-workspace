@@ -2,6 +2,11 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import apiService from "./apiService";
 
+
+// PostDetail 복사 후 변환
+// 기존 PostDetail -> PostDetails 로 변환
+
+
 const PostDetail = () => {
     /*
    기본   자바스크립트에서는 페이지를 이동할 때

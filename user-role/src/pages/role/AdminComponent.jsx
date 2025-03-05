@@ -1,6 +1,6 @@
 
 import React from "react";
-import UserSearch from "./admin/UserSearch";
+import UserSearch from "../admin/UserSearch";
 
 const AdminComponent = () => {
     return (
