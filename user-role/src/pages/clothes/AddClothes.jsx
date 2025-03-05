@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import FormInput from "./FormInput";
 import {useState} from "react";
+import axios from "axios";
 /*
  <FormInput key={field.id} {...field} /> 로 inputFields 를 가져와서 활용하는 방법
 
@@ -77,6 +78,45 @@ const AddClothes = () => {
             [name]: value, // 값이 변경된 input 값만 변경
         })
     }
+     // 백엔드 폼 제출 핸들러
+    const handleSubmit = (e) => {
+        e.preventDefault(); // form 태그가 제출되기 전에 체크하고 제출하기 위해 제출 지연
+
+        // 유효성 검사 체크 -> pattern 정규식 type required 와 같은 형식을 참조하여 체크
+        const form = e.target;
+        if(!form.checkValidity()) {
+            form.classList.add("was-validated"); //bootstrap 내부에서만 동작
+            return;
+        }
+
+
+        axios
+            .post("http://localhost:8080/api/clothes", formData)
+            .then(
+                (res) => {
+                    alert("의류 등록이 완료되었습니다.")
+                    // forData 초기화 할 수 있음
+
+                    // 데이터 전달 성공 표시 메세지
+                    // 성공했을 경우
+                    document.getElementById("submitSuccessMessage").classList.remove("d-none");
+                    document.getElementById("submitErrorMessage").classList.add("d-none");
+
+                }
+
+            )
+            .catch(
+                (err) => {
+                    alert("제품 등록에 실패했습니다. 백엔드를 확인하세요.")
+
+                    // invalid-feedback  활성화 비활성화
+                    document.getElementById("submitSuccessMessage").classList.add("invalid-feedback");
+                    document.getElementById("submitSuccessMessage").classList.add("d-none");
+                    document.getElementById("submitErrorMessage").classList.remove("d-none");
+                }
+            )
+    }
+
     const inputFields = [
         {id: "cName", label: "의류 명칭", placeholder: "상품명을 입력하세요."},                          // index = 0 번
         {id: "cCategory", label: "카테고리", placeholder: "카테고리(예:티셔츠, 바지, 자켓) 입력하세요."},// index = 1 번
@@ -100,7 +140,7 @@ const AddClothes = () => {
                 </div>
                 <div className="row gx-5 justify-content-center">
                     <div className="col-lg-8 col-xl-6">
-                        <form id="contactForm">
+                        <form onSubmit={handleSubmit}>
                             {inputFields.map(
                                 (field) => (
                                     <FormInput key={field.id}
@@ -129,7 +169,7 @@ const AddClothes = () => {
                             </div>
 
                             <div className="d-grid">
-                                <button className="btn btn-primary btn-lg disabled"
+                                <button className="btn btn-primary btn-lg"
                                         id="submitButton"
                                         type="submit">
                                     등록하기
